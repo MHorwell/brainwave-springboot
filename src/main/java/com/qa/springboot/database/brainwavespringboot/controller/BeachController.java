@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.qa.springboot.database.brainwavespringboot.exception.ResourceNotFound
 import com.qa.springboot.database.brainwavespringboot.model.Beach;
 import com.qa.springboot.database.brainwavespringboot.repository.BeachRepository;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class BeachController {
@@ -48,7 +50,7 @@ public class BeachController {
 
 	@GetMapping("/beach/name/{name}")
 	public Collection<Beach> findByName(@PathVariable(value = "name") String beachName) {
-		return repository.findByName(beachName);
+		return repository.findByNameContaining(beachName);
 	}
 
 	@GetMapping("/beach")
