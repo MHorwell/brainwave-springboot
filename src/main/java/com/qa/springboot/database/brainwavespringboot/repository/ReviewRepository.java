@@ -10,7 +10,7 @@ import com.qa.springboot.database.brainwavespringboot.model.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 	
-	Page<ReviewRepository> findByBeachId(Long beachId, Pageable pageable);
+	Page<Review> findByBeachId(Long beachId, Pageable pageable);
 	
 }
 	

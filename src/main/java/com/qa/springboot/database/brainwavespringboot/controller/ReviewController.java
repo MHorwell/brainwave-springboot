@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.qa.springboot.database.brainwavespringboot.repository.BeachRepository
 import com.qa.springboot.database.brainwavespringboot.repository.ReviewRepository;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class ReviewController {
 
@@ -31,7 +33,7 @@ public class ReviewController {
 	private BeachRepository beachRepository;
 
 	@GetMapping("/beach/{beachId}/reviews")
-	public Page<ReviewRepository> getAllReviewsbyBeach(@PathVariable(value = "beachId") Long beachId,
+	public Page<Review> getAllReviewsbyBeach(@PathVariable(value = "beachId") Long beachId,
 			Pageable pageable) {
 		return reviewRepository.findByBeachId(beachId, pageable);
 	}
