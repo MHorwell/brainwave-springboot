@@ -62,7 +62,7 @@ public class BeachController {
 	public Beach updateBeach(@PathVariable(value = "id") Long beachID, @Valid @RequestBody Beach beachDetails) {
 		Beach sDGM = repository.findById(beachID)
 				.orElseThrow(() -> new ResourceNotFoundException("Beach", "id", beachID));
-		if (beachDetails.getName() != null) {
+		if (beachDetails.getName() != "") {
 			sDGM.setName(beachDetails.getName());
 		}
 		if (beachDetails.getLatitude() != 0L) {

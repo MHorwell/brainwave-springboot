@@ -1,5 +1,7 @@
 package com.qa.springboot.database.brainwavespringboot.repository;
 
+import java.util.Collection;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +12,7 @@ import com.qa.springboot.database.brainwavespringboot.model.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 	
-	Page<Review> findByBeachId(Long beachId, Pageable pageable);
+	Collection<Review> findByBeachId(Long beachId);
 	
 }
 	

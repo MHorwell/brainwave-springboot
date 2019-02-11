@@ -1,5 +1,7 @@
 package com.qa.springboot.database.brainwavespringboot.controller;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +35,8 @@ public class ReviewController {
 	private BeachRepository beachRepository;
 
 	@GetMapping("/beach/{beachId}/reviews")
-	public Page<Review> getAllReviewsbyBeach(@PathVariable(value = "beachId") Long beachId,
-			Pageable pageable) {
-		return reviewRepository.findByBeachId(beachId, pageable);
+	public Collection<Review> getAllReviewsbyBeach(@PathVariable(value = "beachId") Long beachId) {
+		return reviewRepository.findByBeachId(beachId);
 	}
 
 	@PostMapping("/beach/{beachId}/reviews")

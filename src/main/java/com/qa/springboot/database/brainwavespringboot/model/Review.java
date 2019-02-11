@@ -1,22 +1,31 @@
 package com.qa.springboot.database.brainwavespringboot.model;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
 @Table(name = "review")
-public class Review {
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = { "creationDate", "lastModified" }, allowGetters = true)
+@DynamicInsert(true)
+@DynamicUpdate(true)
+public class Review implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
