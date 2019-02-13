@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.qa.springboot.database.brainwavespringboot.BrainWaveApplication;
 import com.qa.springboot.database.brainwavespringboot.model.Beach;
@@ -67,14 +67,28 @@ public class ReviewIntegration {
 				.andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.rockpoolRating", is(0)));
 	}
-	
+
 	@Test
 	public void changeBeachReviewTest() throws Exception {
 		reviewRepository.save(review);
-		mvc.perform(put("/api/beach/" + beachId + "/reviews").contentType(MediaType.APPLICATION_JSON).content(
-				"{\"facilitiesRating\": 4, \"surfRating\": 5, \"rockpoolRating\": 0, \"comment\": \"Test beach review\"}"))
+		mvc.perform(put("/api/beach/" + beachId + "/reviews/" + review.getId()).contentType(MediaType.APPLICATION_JSON)
+				.content(
+						"{\"facilitiesRating\": 4, \"surfRating\": 5, \"rockpoolRating\": 0, \"comment\": \"Test beach review\"}"))
 				.andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.rockpoolRating", is(0)));
+				.andExpect(jsonPath("$.rockpoolRating", is(0))).andExpect(jsonPath("$.facilitiesRating", is(4)))
+				.andExpect(jsonPath("$.surfRating", is(5))).andExpect(jsonPath("$.comment", is("Test beach review")));
+	}
+	
+	@Test
+	public void deleteBeachReview() throws Exception {
+		reviewRepository.save(review);
+		mvc.perform(MockMvcRequestBuilders.delete("/api/beach/" + beachId + "/reviews/" + review.getId())
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+		
+		mvc.perform(MockMvcRequestBuilders.delete("/api/beach/" + beachId + "/reviews/" + review.getId())
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
 	}
 
 }

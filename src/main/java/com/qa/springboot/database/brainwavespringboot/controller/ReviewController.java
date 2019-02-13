@@ -56,6 +56,9 @@ public class ReviewController {
 		}
 		return reviewRepository.findById(reviewId).map(review -> {
 			review.setComment(reviewRequest.getComment());
+			review.setRockpoolRating(reviewRequest.getRockpoolRating());
+			review.setSurfRating(reviewRequest.getSurfRating());
+			review.setFacilitiesRating(reviewRequest.getFacilitiesRating());
 			return reviewRepository.save(review);
 		}).orElseThrow(() -> new ResourceNotFoundException("ReviewId", "id", reviewRequest));
 
