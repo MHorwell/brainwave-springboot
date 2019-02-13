@@ -11,7 +11,6 @@ import com.qa.springboot.database.brainwavespringboot.model.Beach;
 @Repository
 public interface BeachRepository extends JpaRepository<Beach,Long> {
 	
-	
 	Collection<Beach> findByNameContaining(String name);
 
 }
